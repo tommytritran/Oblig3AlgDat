@@ -678,7 +678,6 @@ public class Oblig3Test {
         for (int k : verdier) {
             tre.leggInn(k);
         }
-        System.out.println(tre.toString());
         poststring = tre.postString();
         String svar = "[3, 6, 7, 8, 5, 13, 12, 14, 11, 17, 16, 15, 10]";
         if (poststring.compareTo(svar) != 0) {

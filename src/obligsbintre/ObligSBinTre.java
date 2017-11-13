@@ -276,21 +276,22 @@ public class ObligSBinTre<T> implements Beholder<T> {
     }
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
-        if(p.forelder == null){
+        if (p.forelder == null) {
             System.out.println("hei2");
             p = p.forelder;
-        }
-        else if(p.forelder.høyre == null){
+        } else if (p.forelder.høyre == null) {
             System.out.println("hei3");
             p = p.forelder;
-        }
-        else if(p.forelder.venstre == null){
+            System.out.println(p.verdi.toString());
+        } else if (p.forelder.venstre == null) {
             System.out.println("hei5");
             p = p.forelder;
-        }
-        else if (p.forelder.høyre != p) {
+            System.out.println(p.verdi.toString());
+        } else if (p.forelder.høyre != p) {
             System.out.println("hei4");
+            p = p.forelder;
             while (p.høyre != null) {
+                System.out.println("haha");
                 p = p.høyre;
                 if (p.venstre != null) {
                     while (p.venstre != null) {
@@ -298,6 +299,7 @@ public class ObligSBinTre<T> implements Beholder<T> {
                     }
                 }
             }
+            System.out.println(p.verdi.toString());
         }
         return p;
     }
@@ -326,19 +328,18 @@ public class ObligSBinTre<T> implements Beholder<T> {
                 p = nestePostorden(p);
             }
         } else {
-            System.out.println(p.venstre.verdi.toString());
-            while (p.venstre != null) {
+            while (p.venstre != null || p.høyre != null) {
                 p = p.venstre;
-                if (p.venstre == null) {
+                if (p.venstre == null && p.høyre != null) {
                     p = p.høyre;
                 }
             }
-            tekst.add(p.verdi.toString());
+
             while (p != null) {
+                tekst.add(p.verdi.toString());
                 p = nestePostorden(p);
             }
         }
-
         return tekst.toString();
     }
 

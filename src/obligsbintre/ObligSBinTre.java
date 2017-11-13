@@ -129,8 +129,14 @@ public class ObligSBinTre<T> implements Beholder<T> {
                 rot = b;
             } else if (p == q.venstre) {
                 q.venstre = b;
+                if (b != null) {
+                    b.forelder = q;
+                }
             } else {
                 q.høyre = b;
+                if (b != null) {
+                    b.forelder = q;
+                }
             }
         } else // Tilfelle 3)
         {
@@ -154,7 +160,15 @@ public class ObligSBinTre<T> implements Beholder<T> {
     }
 
     public int fjernAlle(T verdi) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        if (tom()) {
+            return 0;
+        }
+        int teller = 0;
+
+        while (fjern(verdi) != false) {
+            teller++;
+        }
+        return teller;
     }
 
     @Override
@@ -190,10 +204,18 @@ public class ObligSBinTre<T> implements Beholder<T> {
 
     @Override
     public void nullstill() {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
-    }
+        if(tom())return;
+        Node<T> p = rot;
+        while(p.venstre != null){
+            p = p.venstre;
+        }
+        while (p != null) {
+            fjern(p.verdi);
+            p = nesteInorden(p);
+        }
+}
 
-    private static <T> Node<T> nesteInorden(Node<T> p) {
+private static <T> Node<T> nesteInorden(Node<T> p) {
 
         if (p.høyre != null) {
             p = p.høyre;
@@ -210,7 +232,7 @@ public class ObligSBinTre<T> implements Beholder<T> {
     }
 
     @Override
-    public String toString() {
+        public String toString() {
         StringJoiner sj = new StringJoiner(", ", "[", "]");
         if (tom()) {
             return "[]";
@@ -256,34 +278,36 @@ public class ObligSBinTre<T> implements Beholder<T> {
     }
 
     @Override
-    public Iterator<T> iterator() {
+        public Iterator<T> iterator() {
         return new BladnodeIterator();
-    }
+    
+
+}
 
     private class BladnodeIterator implements Iterator<T> {
 
-        private Node<T> p = rot, q = null;
-        private boolean removeOK = false;
-        private int iteratorendringer = endringer;
+    private Node<T> p = rot, q = null;
+    private boolean removeOK = false;
+    private int iteratorendringer = endringer;
 
-        private BladnodeIterator() // konstruktør
-        {
-            throw new UnsupportedOperationException("Ikke kodet ennå!");
-        }
+    private BladnodeIterator() // konstruktør
+    {
+        throw new UnsupportedOperationException("Ikke kodet ennå!");
+    }
 
-        @Override
-        public boolean hasNext() {
-            return p != null; // Denne skal ikke endres!
-        }
+    @Override
+    public boolean hasNext() {
+        return p != null; // Denne skal ikke endres!
+    }
 
-        @Override
-        public T next() {
-            throw new UnsupportedOperationException("Ikke kodet ennå!");
-        }
+    @Override
+    public T next() {
+        throw new UnsupportedOperationException("Ikke kodet ennå!");
+    }
 
-        @Override
-        public void remove() {
-            throw new UnsupportedOperationException("Ikke kodet ennå!");
-        }
-    } // BladnodeIterator
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException("Ikke kodet ennå!");
+    }
+} // BladnodeIterator
 } // ObligSBinTre

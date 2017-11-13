@@ -269,7 +269,7 @@ public class Oblig3Test {
             System.out.println("Oppgave 5d: Feil i fjern(T)! Variabelen antall skal");
             System.out.println("ikke endres for en mislykket fjerning.");
         }
-
+        System.out.println(tre);
         fjernet = tre.fjern(2);
         s = tre.toString();
 

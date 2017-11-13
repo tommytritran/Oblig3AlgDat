@@ -27,7 +27,7 @@ public class Oblig3Test {
    antallFeil += oppgave5();
 //    antallFeil += oppgave6();
 //    antallFeil += oppgave7();
-//    antallFeil += oppgave8();
+    antallFeil += oppgave8();
 //    antallFeil += oppgave9();
 //    antallFeil += oppgave10();
         if (antallFeil == 0) {
@@ -269,7 +269,6 @@ public class Oblig3Test {
             System.out.println("Oppgave 5d: Feil i fjern(T)! Variabelen antall skal");
             System.out.println("ikke endres for en mislykket fjerning.");
         }
-        System.out.println(tre);
         fjernet = tre.fjern(2);
         s = tre.toString();
 
@@ -590,7 +589,7 @@ public class Oblig3Test {
         ObligSBinTre<Integer> tre
                 = new ObligSBinTre<>(Comparator.naturalOrder());
 
-        String s = tre.bladnodeverdier();
+        /*String s = tre.bladnodeverdier();
 
         try {
             if (!s.equals("[]")) {
@@ -651,7 +650,7 @@ public class Oblig3Test {
         if (!s.equals("[1]")) {
             antallFeil++;
             System.out.println("Oppgave 8ag: Feil - du har " + s + ", det skal være [1].");
-        }
+        }*/
 
         tre.nullstill();
 
@@ -679,6 +678,7 @@ public class Oblig3Test {
         for (int k : verdier) {
             tre.leggInn(k);
         }
+        System.out.println(tre.toString());
         poststring = tre.postString();
         String svar = "[3, 6, 7, 8, 5, 13, 12, 14, 11, 17, 16, 15, 10]";
         if (poststring.compareTo(svar) != 0) {

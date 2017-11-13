@@ -204,18 +204,20 @@ public class ObligSBinTre<T> implements Beholder<T> {
 
     @Override
     public void nullstill() {
-        if(tom())return;
+        if (tom()) {
+            return;
+        }
         Node<T> p = rot;
-        while(p.venstre != null){
+        while (p.venstre != null) {
             p = p.venstre;
         }
         while (p != null) {
             fjern(p.verdi);
             p = nesteInorden(p);
         }
-}
+    }
 
-private static <T> Node<T> nesteInorden(Node<T> p) {
+    private static <T> Node<T> nesteInorden(Node<T> p) {
 
         if (p.høyre != null) {
             p = p.høyre;
@@ -232,7 +234,7 @@ private static <T> Node<T> nesteInorden(Node<T> p) {
     }
 
     @Override
-        public String toString() {
+    public String toString() {
         StringJoiner sj = new StringJoiner(", ", "[", "]");
         if (tom()) {
             return "[]";
@@ -273,41 +275,103 @@ private static <T> Node<T> nesteInorden(Node<T> p) {
         throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
+    private static <T> Node<T> nestePostorden(Node<T> p) {
+        if(p.forelder == null){
+            System.out.println("hei2");
+            p = p.forelder;
+        }
+        else if(p.forelder.høyre == null){
+            System.out.println("hei3");
+            p = p.forelder;
+        }
+        else if(p.forelder.venstre == null){
+            System.out.println("hei5");
+            p = p.forelder;
+        }
+        else if (p.forelder.høyre != p) {
+            System.out.println("hei4");
+            while (p.høyre != null) {
+                p = p.høyre;
+                if (p.venstre != null) {
+                    while (p.venstre != null) {
+                        p = p.venstre;
+                    }
+                }
+            }
+        }
+        return p;
+    }
+
     public String postString() {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        StringJoiner tekst = new StringJoiner(", ", "[", "]");
+        if (tom()) {
+            return tekst.toString();
+        }
+
+        Node<T> p = rot;
+
+        if (p != null && antall == 1) {
+            tekst.add(p.verdi.toString());
+        } else if (p.venstre == null && p.høyre != null) {
+            while (p.høyre != null) {
+                p = p.høyre;
+                if (p.venstre != null) {
+                    while (p.venstre != null) {
+                        p = p.venstre;
+                    }
+                }
+            }
+            while (p != null) {
+                tekst.add(p.verdi.toString());
+                p = nestePostorden(p);
+            }
+        } else {
+            System.out.println(p.venstre.verdi.toString());
+            while (p.venstre != null) {
+                p = p.venstre;
+                if (p.venstre == null) {
+                    p = p.høyre;
+                }
+            }
+            tekst.add(p.verdi.toString());
+            while (p != null) {
+                p = nestePostorden(p);
+            }
+        }
+
+        return tekst.toString();
     }
 
     @Override
-        public Iterator<T> iterator() {
+    public Iterator<T> iterator() {
         return new BladnodeIterator();
-    
 
-}
+    }
 
     private class BladnodeIterator implements Iterator<T> {
 
-    private Node<T> p = rot, q = null;
-    private boolean removeOK = false;
-    private int iteratorendringer = endringer;
+        private Node<T> p = rot, q = null;
+        private boolean removeOK = false;
+        private int iteratorendringer = endringer;
 
-    private BladnodeIterator() // konstruktør
-    {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
-    }
+        private BladnodeIterator() // konstruktør
+        {
+            throw new UnsupportedOperationException("Ikke kodet ennå!");
+        }
 
-    @Override
-    public boolean hasNext() {
-        return p != null; // Denne skal ikke endres!
-    }
+        @Override
+        public boolean hasNext() {
+            return p != null; // Denne skal ikke endres!
+        }
 
-    @Override
-    public T next() {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
-    }
+        @Override
+        public T next() {
+            throw new UnsupportedOperationException("Ikke kodet ennå!");
+        }
 
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
-    }
-} // BladnodeIterator
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException("Ikke kodet ennå!");
+        }
+    } // BladnodeIterator
 } // ObligSBinTre

@@ -277,16 +277,12 @@ public class ObligSBinTre<T> implements Beholder<T> {
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
         if (p.forelder == null) {
-            System.out.println("hei2");
             return p.forelder;
         } else if (p.forelder.høyre == null) {
-            System.out.println("hei3");
             return p.forelder;
         } else if (p.forelder.venstre == null) {
-            System.out.println("hei5");
             return p.forelder;
         } else if (p.forelder.høyre != p) {
-            System.out.println("hei4");
             p = p.forelder;
             while (p.høyre != null) {
                 p = p.høyre;

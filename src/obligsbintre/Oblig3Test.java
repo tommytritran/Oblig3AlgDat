@@ -24,7 +24,7 @@ public class Oblig3Test {
     antallFeil += oppgave2();
     antallFeil += oppgave3();
 //    antallFeil += oppgave4();
-   antallFeil += oppgave5();
+  // antallFeil += oppgave5();
 //    antallFeil += oppgave6();
 //    antallFeil += oppgave7();
     antallFeil += oppgave8();
@@ -589,7 +589,7 @@ public class Oblig3Test {
         ObligSBinTre<Integer> tre
                 = new ObligSBinTre<>(Comparator.naturalOrder());
 
-        /*String s = tre.bladnodeverdier();
+        String s = tre.bladnodeverdier();
 
         try {
             if (!s.equals("[]")) {
@@ -650,7 +650,7 @@ public class Oblig3Test {
         if (!s.equals("[1]")) {
             antallFeil++;
             System.out.println("Oppgave 8ag: Feil - du har " + s + ", det skal være [1].");
-        }*/
+        }
 
         tre.nullstill();
 

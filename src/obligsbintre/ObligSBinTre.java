@@ -207,14 +207,18 @@ public class ObligSBinTre<T> implements Beholder<T> {
         if (tom()) {
             return;
         }
-        Node<T> p = rot;
-        while (p.venstre != null) {
-            p = p.venstre;
+        nullStillnode(rot);
+
+    }
+
+    public void nullStillnode(Node<T> p) {
+        if (p.venstre != null) {
+            nullStillnode(p.venstre);
         }
-        while (p != null) {
-            fjern(p.verdi);
-            p = nesteInorden(p);
+        if (p.høyre != null) {
+            nullStillnode(p.høyre);
         }
+        fjern(p.verdi);
     }
 
     private static <T> Node<T> nesteInorden(Node<T> p) {
@@ -272,7 +276,30 @@ public class ObligSBinTre<T> implements Beholder<T> {
     }
 
     public String bladnodeverdier() {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        if (tom()) {
+            return "[]";
+        }
+        Node<T> p = rot;
+
+        StringJoiner sj = new StringJoiner(", ", "[", "]");
+
+        finnBladnode(p, sj);
+
+        return sj.toString();
+    }
+
+    public String finnBladnode(Node<T> p, StringJoiner sj) {
+        if (p.venstre == null && p.høyre == null) {
+            sj.add(p.verdi.toString());
+        }
+        if (p.venstre != null) {
+            finnBladnode(p.venstre, sj);
+        }
+        if (p.høyre != null) {
+            finnBladnode(p.høyre, sj);
+        }
+
+        return sj.toString();
     }
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
@@ -284,21 +311,14 @@ public class ObligSBinTre<T> implements Beholder<T> {
             return p.forelder;
         } else if (p.forelder.høyre != p) {
             p = p.forelder;
-            while (p.høyre != null) {
-                p = p.høyre;
-                if (p.venstre != null) {
-                    while (p.venstre != null) {
-                        p = p.venstre;
-                    }
-                }
+            while (p.høyre != null && p.venstre != null) {
+                p = p.høyre != null? p.høyre:p.venstre;
             }
             return p;
-        }
-        
-        else if (p.forelder != null && p != p.forelder.venstre) {
+        } else if (p.forelder != null && p != p.forelder.venstre) {
             return p.forelder;
         }
-        
+
         return null;
     }
 
@@ -309,35 +329,15 @@ public class ObligSBinTre<T> implements Beholder<T> {
         }
 
         Node<T> p = rot;
-
-        if (p != null && antall == 1) {
-            tekst.add(p.verdi.toString());
-        } else if (p.venstre == null && p.høyre != null) {
-            while (p.høyre != null) {
-                p = p.høyre;
-                if (p.venstre != null) {
-                    while (p.venstre != null) {
-                        p = p.venstre;
-                    }
-                }
-            }
-            while (p != null) {
-                tekst.add(p.verdi.toString());
-                p = nestePostorden(p);
-            }
-        } else {
-            while (p.venstre != null || p.høyre != null) {
-                p = p.venstre;
-                if (p.venstre == null && p.høyre != null) {
-                    p = p.høyre;
-                }
-            }
-
-            while (p != null) {
-                tekst.add(p.verdi.toString());
-                p = nestePostorden(p);
-            }
+        p = p.venstre != null ? p.venstre : p.høyre;
+        while (p.venstre != null || p.høyre != null) {
+            p = p.venstre != null ? p.venstre : p.høyre;
         }
+        while (p != null) {
+            tekst.add(p.verdi.toString());
+            p = nestePostorden(p);
+        }
+
         return tekst.toString();
     }
 

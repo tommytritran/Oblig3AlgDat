@@ -213,6 +213,7 @@ public class ObligSBinTre<T> implements Beholder<T> {
         }
         while (p != null) {
             fjern(p.verdi);
+            System.out.println(p.verdi);
             p = nesteInorden(p);
         }
     }
@@ -325,7 +326,7 @@ public class ObligSBinTre<T> implements Beholder<T> {
                 tekst.add(p.verdi.toString());
                 p = nestePostorden(p);
             }
-        } else {
+        } /*else {
             while (p.venstre != null || p.høyre != null) {
                 p = p.venstre;
                 if (p.venstre == null && p.høyre != null) {
@@ -337,7 +338,7 @@ public class ObligSBinTre<T> implements Beholder<T> {
                 tekst.add(p.verdi.toString());
                 p = nestePostorden(p);
             }
-        }
+        }*/
         return tekst.toString();
     }
 

@@ -17,7 +17,7 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int[] a = {5, 3, 8, 7, 6, 11, 16, 14, 17, 12, 13};
+        int[] a = {4,7,2,9,4,10,8,7,4,6,1};
         ObligSBinTre<Integer> tre = new ObligSBinTre<>(Comparator.naturalOrder());
         for (int verdi : a) {
             tre.leggInn(verdi);

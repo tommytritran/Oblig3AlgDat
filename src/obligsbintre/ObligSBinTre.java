@@ -310,35 +310,15 @@ public class ObligSBinTre<T> implements Beholder<T> {
         }
 
         Node<T> p = rot;
-
-        if (p != null && antall == 1) {
+        p = p.venstre != null ? p.venstre : p.høyre;
+        while (p.venstre != null || p.høyre != null) {
+            p = p.venstre != null ? p.venstre : p.høyre;
+        }
+        while (p != null) {
             tekst.add(p.verdi.toString());
-        } else if (p.venstre == null && p.høyre != null) {
-            while (p.høyre != null) {
-                p = p.høyre;
-                if (p.venstre != null) {
-                    while (p.venstre != null) {
-                        p = p.venstre;
-                    }
-                }
-            }
-            while (p != null) {
-                tekst.add(p.verdi.toString());
-                p = nestePostorden(p);
-            }
-        } /*else {
-            while (p.venstre != null || p.høyre != null) {
-                p = p.venstre;
-                if (p.venstre == null && p.høyre != null) {
-                    p = p.høyre;
-                }
-            }
+            p = nestePostorden(p);
+        }
 
-            while (p != null) {
-                tekst.add(p.verdi.toString());
-                p = nestePostorden(p);
-            }
-        }*/
         return tekst.toString();
     }
 

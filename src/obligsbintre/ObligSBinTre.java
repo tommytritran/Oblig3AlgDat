@@ -1,5 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+ * To change this license roter, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -288,7 +288,7 @@ public class ObligSBinTre<T> implements Beholder<T> {
         return sj.toString();
     }
 
-    public String finnBladnode(Node<T> p, StringJoiner sj) {
+    private String finnBladnode(Node<T> p, StringJoiner sj) {
         if (p.venstre == null && p.høyre == null) {
             sj.add(p.verdi.toString());
         }
@@ -302,40 +302,38 @@ public class ObligSBinTre<T> implements Beholder<T> {
         return sj.toString();
     }
 
-    private static <T> Node<T> nestePostorden(Node<T> p) {
-        p = p.forelder;
-        if (p != null) {
-            if (p.høyre != null) {
-                while (p.venstre != null) {
-                    p = p.høyre;
-                    if (p.høyre != null || p.venstre != null) {
-                        p = p.venstre != null ? p.venstre : p.høyre;
-                        System.out.println(p.verdi);
-                    }
+    private String postorden(Node rot, StringJoiner sj) {
+        LinkedList<Node> stack = new LinkedList<Node>();
+        stack.push(rot);
+
+        while (!stack.isEmpty()) {
+            Node neste = stack.peek();
+
+            boolean ferdigTre = (neste.høyre == rot || neste.venstre == rot);
+            boolean bladNode = (neste.venstre == null && neste.høyre == null);
+            if (ferdigTre || bladNode) {
+                stack.pop();
+                sj.add(neste.verdi.toString());
+                rot = neste;
+            } else {
+                if (neste.høyre != null) {
+                    stack.push(neste.høyre);
+                }
+                if (neste.venstre != null) {
+                    stack.push(neste.venstre);
                 }
             }
-            
         }
-        return p;
+        return sj.toString();
     }
 
     public String postString() {
-        StringJoiner tekst = new StringJoiner(", ", "[", "]");
         if (tom()) {
-            return tekst.toString();
+            return "[]";
         }
+        StringJoiner sj = new StringJoiner(", ", "[", "]");
 
-        Node<T> p = rot;
-        p = p.venstre != null ? p.venstre : p.høyre;
-        while (p.venstre != null || p.høyre != null) {
-            p = p.venstre != null ? p.venstre : p.høyre;
-        }
-        while (p != null) {
-            tekst.add(p.verdi.toString());
-            p = nestePostorden(p);
-        }
-
-        return tekst.toString();
+        return postorden(rot,sj);
     }
 
     @Override
@@ -360,14 +358,18 @@ public class ObligSBinTre<T> implements Beholder<T> {
             return p != null; // Denne skal ikke endres!
         }
 
-        @Override
-        public T next() {
+        public T neste() {
             throw new UnsupportedOperationException("Ikke kodet ennå!");
         }
 
         @Override
         public void remove() {
             throw new UnsupportedOperationException("Ikke kodet ennå!");
+        }
+
+        @Override
+        public T next() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     } // BladnodeIterator
 } // ObligSBinTre

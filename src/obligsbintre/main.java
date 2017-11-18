@@ -23,8 +23,8 @@ public class main {
             tre.leggInn(verdi);
         }
         System.out.println(tre);
-        System.out.println(tre.postString());
-        System.out.println(tre);
+        System.out.println(tre.bladnodeverdier());
+        
         
     }
 }
